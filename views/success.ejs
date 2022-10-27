@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=display-width">
+    <link rel="stylesheet" href="public/css/style.css" type="text/css">
+    <title>Guides</title>
+</head>
+
+<body>
+    <section class="container">
+        <%-include ('blocks/header') %>
+            <div class="successBlock">
+                <h1 class="success">Success</h1>
+                <ul class="info">
+                    <li>First name: <%= data.fName %>
+                    </li>
+                    <li>Last name: <%= data.lName %>
+                    </li>
+                    <li>Email: <%= data.email %>
+                    </li>
+                    <li>Text: <%= data.someText %>
+                    </li>
+                </ul>
+                <a class="home" href="/">Home page</a>
+            </div>
+            <%-include ('blocks/footer') %>
+    </section>
+    <style>
+        .successBlock {
+            text-align: center;
+            margin: 10vw auto;
+        }
+
+        .success {
+            font-size: 6vw;
+        }
+
+        .info {
+            font-size: 2vw;
+            margin: 4vw 0;
+        }
+
+        .home {
+            font-size: 3vw;
+            color: #232323;
+            margin-top: 5vw;
+        }
+    </style>
+</body>
+
+</html>
