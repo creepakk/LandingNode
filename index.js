@@ -1,39 +1,32 @@
-let express = require('express');
-let bodyParser = require('body-parser');
+const express = require('express');
+const exphbs = require("express-handlebars");
+const path = require('path');
+const router = require('./routes/router.js');
 
-let app = express();
+const PORT = process.env.PORT || 3000;
 
-let urlEncodedParser = bodyParser.urlencoded({ extended: false });
-
-app.set('view engine', 'ejs');
-app.use('/public', express.static('public'));
-app.use('/img', express.static(__dirname + '/public/img'));
-
-app.get('/', function (req, res) {
-    res.render('index');
+const app = express();
+const hbs = exphbs.create({
+    defaultLayout: 'main',
+    extname: 'hbs',
 });
 
-app.get('/guides', function (req, res) {
-    res.render('guides');
-});
+app.engine('hbs', hbs.engine);
+app.set('view engine', 'hbs');
+app.set('views', 'views');
 
-app.get('/flights', function (req, res) {
-    res.render('flights');
-});
+app.use('/', router);
+app.use(express.urlencoded({ extended: false }));
+app.use(express.static(path.join(__dirname, 'public')));
 
-app.get('/about', function (req, res) {
-    res.render('about');
-});
+async function start() {
+    try {
+        app.listen(PORT, function () {
+            console.log('Server has been started');
+        });
+    } catch (e) {
+        console.log(e);
+    }
+};
 
-app.get('/contact', function (req, res) {
-    res.render('contact');
-});
-
-app.post('/success', urlEncodedParser, function (req, res) {
-    if (!req.body) return res.sendStatus(400);
-    console.log(req.body);
-    res.render('success', { data: req.body });
-});
-
-app.listen(3000);
-console.log('Сервер запущен с портом 3000');
+start();
